@@ -20,12 +20,25 @@ namespace ProyectoFinalTacos.Controllers
         {
             _context = context;
         }
+        private bool IsUserAdmin()
+        {
+            return HttpContext.Session.GetString("IsAdmin") == "true";
+        }
 
-        // GET: Usuarios
+        public IActionResult UnauthorizedAccess()
+        {
+            return RedirectToAction("Index", "Home");
+        }
         public async Task<IActionResult> Index()
         {
-            return View(await _context.Usuario.ToListAsync());
+            if (!IsUserAdmin())
+            {
+                return UnauthorizedAccess();
+            }
+            return View(await _context.Admin.ToListAsync());
         }
+        // GET: Usuarios
+        
 
         // GET: Usuarios/Details/5
         public async Task<IActionResult> Details(int? id)
@@ -183,6 +196,7 @@ namespace ProyectoFinalTacos.Controllers
             }
             return View(model);
         }
+
 
         public IActionResult Logout()
         {

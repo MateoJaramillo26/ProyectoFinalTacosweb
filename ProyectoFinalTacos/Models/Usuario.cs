@@ -3,7 +3,7 @@ using System.ComponentModel.DataAnnotations;
 
 namespace ProyectoFinalTacos.Models
 {
-    public class Usuario : IdentityUser
+    public class Usuario 
     {
         [Key]
         public int IDUsuario { get; set; }

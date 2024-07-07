@@ -33,6 +33,8 @@ app.UseRouting();
 
 app.UseAuthorization();
 app.UseSession();
+app.UseMiddleware<AdminMiddleware>();
+
 
 app.MapControllerRoute(
     name: "default",

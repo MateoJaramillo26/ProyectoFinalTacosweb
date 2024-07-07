@@ -5,7 +5,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace ProyectoFinalTacos.Models
 {
-    public class Admin : IdentityUser
+    public class Admin 
     {
         [Key]
         public int IDAdmin { get; set; }

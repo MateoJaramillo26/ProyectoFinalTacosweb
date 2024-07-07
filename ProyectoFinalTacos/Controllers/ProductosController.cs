@@ -15,11 +15,27 @@ namespace ProyectoFinalTacos.Controllers
         public ProductosController(ProyectoFinalTacosContext context)
         {
             _context = context;
+
+            
+        }
+        //Esta sería la validación de que si es admina accede, sino no.
+         private bool IsUserAdmin()
+        {
+            return HttpContext.Session.GetString("IsAdmin") == "true";
+        }
+
+        public IActionResult UnauthorizedAccess()
+        {
+            return RedirectToAction("Index", "Home");
         }
 
         // GET: Productos
         public async Task<IActionResult> Index()
         {
+            if (!IsUserAdmin())
+            {
+                return UnauthorizedAccess();
+            }
             var products = await _context.Producto.ToListAsync();
             var model = new ProductsViewmodel
             {
