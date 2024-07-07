@@ -10,7 +10,7 @@ namespace ProyectoFinalTacos.Controllers
 {
     public class HomeController : Controller
     {
-       private readonly ProyectoFinalTacosContext _context;
+        private readonly ProyectoFinalTacosContext _context;
 
         public HomeController(ProyectoFinalTacosContext context)
         {
