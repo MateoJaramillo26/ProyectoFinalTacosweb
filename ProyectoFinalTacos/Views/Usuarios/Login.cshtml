@@ -1,0 +1,24 @@
+﻿@model ProyectoFinalTacos.ViewModels.LoginViewModel
+
+@{
+    ViewData["Title"] = "Login";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Login</h2>
+
+<form asp-action="Login">
+    <div class="form-group">
+        <label asp-for="CorreoUsuario" class="control-label"></label>
+        <input asp-for="CorreoUsuario" class="form-control" />
+        <span asp-validation-for="CorreoUsuario" class="text-danger"></span>
+    </div>
+    <div class="form-group">
+        <label asp-for="ContraseñaUsuario" class="control-label"></label>
+        <input asp-for="ContraseñaUsuario" class="form-control" type="password" />
+        <span asp-validation-for="ContraseñaUsuario" class="text-danger"></span>
+    </div>
+    <div class="form-group">
+        <input type="submit" value="Login" class="btn btn-primary" />
+    </div>
+</form>

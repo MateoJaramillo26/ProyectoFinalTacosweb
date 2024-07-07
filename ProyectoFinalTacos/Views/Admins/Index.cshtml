@@ -1,0 +1,56 @@
+﻿@model IEnumerable<ProyectoFinalTacos.Models.Admin>
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h1>Index</h1>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.FirstOrDefault().NombreAdmin)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.FirstOrDefault().CedulaAdmin)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.FirstOrDefault().NumeroTelef)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.FirstOrDefault().CorreoAdmin)
+            </th>
+            <th>
+                @Html.DisplayName("ContraseñaAdmin")
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.NombreAdmin)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.CedulaAdmin)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.NumeroTelef)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.CorreoAdmin)
+                </td>
+                <td>
+                    @* Password field is hidden *@
+                    ******
+                </td>
+                <td>
+                    <a asp-action="Details" asp-route-id="@item.IDAdmin">Details</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
