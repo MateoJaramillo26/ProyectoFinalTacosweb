@@ -1,10 +1,11 @@
-﻿using System;
+﻿using Microsoft.AspNetCore.Identity;
+using System;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
 namespace ProyectoFinalTacos.Models
 {
-    public class Admin
+    public class Admin : IdentityUser
     {
         [Key]
         public int IDAdmin { get; set; }

@@ -7,6 +7,13 @@
 
 <h2>Registro</h2>
 
+@if (ViewData["ErrorMessage"] != null)
+{
+    <script type="text/javascript">
+        alert("@ViewData["ErrorMessage"]");
+    </script>
+}
+
 <form asp-action="Registro">
     <div class="form-group">
         <label asp-for="NombreUsuario" class="control-label"></label>
@@ -34,7 +41,6 @@
         <span asp-validation-for="ContraseñaUsuario" class="text-danger"></span>
     </div>
     <div class="form-group">
-       
         <input type="submit" value="Registro" class="btn btn-primary" />
     </div>
 </form>

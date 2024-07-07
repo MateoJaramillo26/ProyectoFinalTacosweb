@@ -1,8 +1,9 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using Microsoft.AspNetCore.Identity;
+using System.ComponentModel.DataAnnotations;
 
 namespace ProyectoFinalTacos.Models
 {
-    public class Usuario
+    public class Usuario : IdentityUser
     {
         [Key]
         public int IDUsuario { get; set; }
@@ -16,7 +17,7 @@ namespace ProyectoFinalTacos.Models
         public string CedulaUsuario { get; set; }
 
         [Required]
-        [StringLength(10)]
+        [MinLength (10), MaxLength (10)]
         public string NumeroUsuario { get; set; }
 
         [Required]

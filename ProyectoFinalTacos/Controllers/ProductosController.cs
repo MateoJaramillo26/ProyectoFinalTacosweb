@@ -1,31 +1,41 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.Rendering;
+﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using ProyectoFinalTacos.Data;
 using ProyectoFinalTacos.Models;
+using ProyectoFinalTacos.ViewModels;
+using System.Linq;
+using System.Threading.Tasks;
 
 namespace ProyectoFinalTacos.Controllers
 {
-    public class ProductoesController : Controller
+    public class ProductosController : Controller
     {
         private readonly ProyectoFinalTacosContext _context;
 
-        public ProductoesController(ProyectoFinalTacosContext context)
+        public ProductosController(ProyectoFinalTacosContext context)
         {
             _context = context;
         }
 
-        // GET: Productoes
+        // GET: Productos
         public async Task<IActionResult> Index()
         {
-            return View(await _context.Producto.ToListAsync());
+            var products = await _context.Producto.ToListAsync();
+            var model = new ProductsViewmodel
+            {
+                Products = products
+            };
+            return View(model);
         }
 
-        // GET: Productoes/Details/5
+        [HttpGet]
+        public async Task<IActionResult> GetProducts()
+        {
+            var products = await _context.Producto.ToListAsync();
+            return Json(products);
+        }
+
+        // GET: Productos/Details/5
         public async Task<IActionResult> Details(int? id)
         {
             if (id == null)
@@ -43,18 +53,16 @@ namespace ProyectoFinalTacos.Controllers
             return View(producto);
         }
 
-        // GET: Productoes/Create
+        // GET: Productos/Create
         public IActionResult Create()
         {
             return View();
         }
 
-        // POST: Productoes/Create
-        // To protect from overposting attacks, enable the specific properties you want to bind to.
-        // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
+        // POST: Productos/Create
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("IDProducto,NombreProducto,DescripcionProducto,ImagenProducto")] Producto producto)
+        public async Task<IActionResult> Create([Bind("IDProducto,NombreProducto,DescripcionProducto,ImagenProducto,Precio")] Producto producto)
         {
             if (ModelState.IsValid)
             {
@@ -65,7 +73,7 @@ namespace ProyectoFinalTacos.Controllers
             return View(producto);
         }
 
-        // GET: Productoes/Edit/5
+        // GET: Productos/Edit/5
         public async Task<IActionResult> Edit(int? id)
         {
             if (id == null)
@@ -81,12 +89,10 @@ namespace ProyectoFinalTacos.Controllers
             return View(producto);
         }
 
-        // POST: Productoes/Edit/5
-        // To protect from overposting attacks, enable the specific properties you want to bind to.
-        // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
+        // POST: Productos/Edit/5
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("IDProducto,NombreProducto,DescripcionProducto,ImagenProducto")] Producto producto)
+        public async Task<IActionResult> Edit(int id, [Bind("IDProducto,NombreProducto,DescripcionProducto,ImagenProducto,Precio")] Producto producto)
         {
             if (id != producto.IDProducto)
             {
@@ -116,7 +122,7 @@ namespace ProyectoFinalTacos.Controllers
             return View(producto);
         }
 
-        // GET: Productoes/Delete/5
+        // GET: Productos/Delete/5
         public async Task<IActionResult> Delete(int? id)
         {
             if (id == null)
@@ -124,7 +130,7 @@ namespace ProyectoFinalTacos.Controllers
                 return NotFound();
             }
 
-            var producto = await _context.Producto
+            var producto = await _context.Producto              
                 .FirstOrDefaultAsync(m => m.IDProducto == id);
             if (producto == null)
             {
@@ -134,7 +140,7 @@ namespace ProyectoFinalTacos.Controllers
             return View(producto);
         }
 
-        // POST: Productoes/Delete/5
+        // POST: Productos/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)

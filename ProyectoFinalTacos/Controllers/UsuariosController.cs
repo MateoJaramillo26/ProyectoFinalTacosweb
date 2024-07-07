@@ -9,6 +9,7 @@ using ProyectoFinalTacos.Models;
 using Microsoft.AspNetCore.Http;
 using ProyectoFinalTacos.ViewModels;
 
+
 namespace ProyectoFinalTacos.Controllers
 {
     public class UsuariosController : Controller
@@ -169,14 +170,14 @@ namespace ProyectoFinalTacos.Controllers
                 {
                     HttpContext.Session.SetString("UserEmail", user.CorreoUsuario);
                     HttpContext.Session.SetString("IsAdmin", "false");
-                    return RedirectToAction("UserDashboard", "User");
+                    return RedirectToAction("Index", "Home");
                 }
                 var admin = _context.Admin.FirstOrDefault(a => a.CorreoAdmin == model.CorreoUsuario && a.ContraseñaAdmin == model.ContraseñaUsuario);
                 if (admin != null)
                 {
                     HttpContext.Session.SetString("UserEmail", admin.CorreoAdmin);
                     HttpContext.Session.SetString("IsAdmin", "true");
-                    return RedirectToAction("AdminDashboard", "Admin");
+                    return RedirectToAction("Index", "Home");
                 }
                 ModelState.AddModelError("", "Invalid login attempt.");
             }
@@ -210,9 +211,15 @@ namespace ProyectoFinalTacos.Controllers
                     CorreoUsuario = model.CorreoUsuario,
                     ContraseñaUsuario = model.ContraseñaUsuario
                 };
-                _context.Add(usuario);
-                await _context.SaveChangesAsync();
-                return RedirectToAction(nameof(Login));
+                try
+                {
+                    _context.Add(usuario);
+                    await _context.SaveChangesAsync();
+                    return RedirectToAction(nameof(HomeController.Index));
+                } catch (Exception)
+                {
+                    ViewData["ErrorMessage"] = "El correo, cedula o numero de telefono ya estan registrados con otro usuario.";
+                }
             }
             return View(model);
         }
